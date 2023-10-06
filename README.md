@@ -41,6 +41,58 @@ Multilingual Speech Commands (MSC) dataset represents utterances for 35 keywords
 |34|visual|көрнекі|визуаль|визуальный|
 |35|wow|мәссаған|о|ух ты|
 
+## Model Training and Testing
+We employed the [Keyword-MLP](https://github.com/AI-Research-BD/Keyword-MLP) model in this project. We sincerely thank the authors for open-sourcing the code. 
+1. Download the code and install the required packages
+```
+git clone https://github.com/fair-ai-lab/Multilingual-Speech-Commands-Dataset.git
+pip install -r requirements.txt
+```
+2. Download and unzip the dataset
+
+We augmented the dataset for Kazakh, Russian, and Tatar to increase the dataset size. The augmented dataset can be downloaded from [Google Drive](https://drive.google.com/file/d/1ltZJj95J5zBDp6rmoEomJxJzN4Rb8WAF/view?usp=sharing).
+The statistics of the augmented dataset as follows:
+
+|Dataset|Train|Validation|Test|
+|------|--------|--------|--------|
+|Kazakh | 80,028	| 12,600	| 10,500 |
+|Tatar | 77,292	| 12,600	| 10,500 |
+|Russian | 58,275	| -	| 7,000 |
+|Google Speech Commands v2 | 84,843	| 9,981	| 11,005 |
+
+3. To train Keyword-MLP as a monolingual speech command recognition model, update paths to dataset in each configuration file and run the following commands: 
+   
+Kazakh language:
+```
+python train.py --conf configs/kwmlp_kscd.yaml
+```
+Tatar language:
+```
+python train.py --conf configs/kwmlp_tscd.yaml
+```
+Russian language:
+```
+python train.py --conf configs/kwmlp_rscd.yaml
+```
+English language:
+```
+python train.py --conf configs/kwmlp_google.yaml
+```
+
+4. To train Keyword-MLP as a multilingual speech command recognition model, update paths to dataset in each configuration file and run the following commands: 
+   
+Multi-35:
+```
+python train.py --conf configs/kwmlp_multi_35.yaml
+```
+Multi-140:
+```
+python train.py --conf configs/kwmlp_multi_140.yaml
+```
+5. To evaluate the monolingual and multilingual models, download the test set from [Google Drive](https://drive.google.com/file/d/1EFUIQxD2RxGA5BkkCEsSoEkv6HbswgyD/view?usp=sharing) and run the following notebooks:
+
+```eval_kk.ipynb```, ```eval_ru.ipynb```, ```eval_tt.ipynb```, and ```eval_en.ipynb``` 
+
 ## Checkpoints
 Pretrained models can be downloaded from Google Drive. The following table provides links for downloading the models and accuracy (%) of each model on the test sets. 
 |Model|Checkpoint|Acc (kk)|Acc (tt)|Acc (ru)|Acc (en)|
